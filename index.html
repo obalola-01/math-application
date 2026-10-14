@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Application Tutoring</title>
+    <meta name="description" content="Practice math problems with step-by-step solutions and AI-powered tutoring.">
+    <link rel="canonical" href="https://mathapptutoring.com/">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://mathapptutoring.com/">
+    <meta property="og:title" content="Math Application Tutoring">
+    <meta property="og:description" content="Practice math problems with step-by-step solutions and AI-powered tutoring.">
+    <style>
+        body {
+            font-family: Georgia, 'Times New Roman', serif;
+            margin: 0;
+            padding: 36px 20px;
+            background: #f3f0e8;
+            color: #202b2a;
+        }
+        .container {
+            max-width: 760px;
+            margin: 0 auto;
+            padding: 32px;
+            background: #fffefa;
+            border: 1px solid #d8d4c8;
+            border-radius: 6px;
+        }
+        h1 { margin: 0 0 8px; font-size: 30px; }
+        p { color: #566461; }
+        .practice { margin-top: 28px; text-align: left; }
+        .practice-header { display: flex; justify-content: space-between; gap: 16px; align-items: center; }
+        .practice-header h2 { margin: 0; font-size: 20px; }
+        .controls { display: flex; gap: 8px; align-items: center; }
+        select, button { font: inherit; }
+        select { min-height: 40px; padding: 0 10px; border: 1px solid #a6b0aa; border-radius: 4px; background: white; color: #202b2a; }
+        .account { margin-top: 24px; padding-bottom: 22px; border-bottom: 1px solid #d8d4c8; }
+        .account h2 { margin: 0 0 12px; font-size: 20px; }
+        .auth-form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+        .auth-form label { display: grid; gap: 6px; font: 14px/1.4 Arial, sans-serif; }
+        .auth-form input { min-width: 0; min-height: 40px; box-sizing: border-box; padding: 8px 10px; border: 1px solid #a6b0aa; border-radius: 4px; font: inherit; }
+        .auth-form .guardian-consent { display: flex; align-items: flex-start; gap: 8px; grid-column: 1 / -1; }
+        .guardian-consent input { flex: 0 0 auto; min-height: auto; margin: 3px 0 0; }
+        .auth-actions, .account-session { display: flex; align-items: center; gap: 8px; grid-column: 1 / -1; }
+        .secondary-button { background: #fffefa; color: #16735c; border: 1px solid #16735c; }
+        .secondary-button:hover { background: #e5efeb; }
+        button:disabled { opacity: 0.55; cursor: not-allowed; }
+        .auth-status { margin: 10px 0 0; font: 14px/1.5 Arial, sans-serif; color: #566461; }
+        .problem { margin: 20px 0 12px; padding: 22px; background: #e5efeb; border-left: 4px solid #16735c; font-size: 24px; }
+        .solution-toggle { margin: 14px 0; padding: 0; border: 0; border-radius: 0; background: transparent; color: #16735c; text-align: left; text-decoration: underline; font: 700 15px/1.6 Arial, sans-serif; }
+        .solution-toggle:hover { background: transparent; color: #105b49; }
+        .solution-panel { text-align: left; font: 15px/1.6 Arial, sans-serif; }
+        .solution-panel ol { padding-left: 24px; }
+        .solution-answer { font-weight: 700; }
+        .answer-row { display: flex; gap: 8px; }
+        .answer-row input { flex: 1; min-width: 0; padding: 10px 12px; font: inherit; border: 1px solid #a6b0aa; border-radius: 4px; }
+        button {
+            background-color: #16735c;
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            font-size: 15px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        button:hover { background: #105b49; }
+        .model-status { margin: 14px 0 0; font: 14px/1.5 Arial, sans-serif; color: #566461; }
+        .billing { margin-top: 36px; padding-top: 22px; border-top: 1px solid #d8d4c8; }
+        .billing button { margin-top: 8px; }
+        .manage-subscription { display: inline-block; margin: 8px 0 0 8px; color: #16735c; font: 700 15px/1.5 Arial, sans-serif; }
+        .manage-subscription[hidden] { display: none; }
+        #debug-box { margin-top: 16px; font: 14px/1.5 Arial, sans-serif; }
+        .legal-links { display: flex; gap: 16px; margin-top: 24px; padding-top: 16px; border-top: 1px solid #d8d4c8; font: 14px/1.5 Arial, sans-serif; }
+        .legal-links a { color: #16735c; }
+        @media (max-width: 560px) {
+            body { padding: 16px 12px; }
+            .container { padding: 22px 16px; }
+            .practice-header { align-items: flex-start; flex-direction: column; }
+            .controls, .answer-row { width: 100%; }
+            .controls select { flex: 1; }
+            .auth-form { grid-template-columns: 1fr; }
+            .auth-actions { flex-wrap: wrap; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Math Application Tutoring</h1>
+        <p>Practice algebra, geometry, and calculus with a tutor that adapts to your answers. No signup needed to start.</p>
+
+        <section class="practice" aria-labelledby="practice-title">
+            <div class="practice-header">
+                <h2 id="practice-title">Adaptive practice</h2>
+                <div class="controls">
+                    <label for="topic-select">Topic</label>
+                    <select id="topic-select">
+                        <option value="algebra">Algebra</option>
+                        <option value="geometry">Geometry</option>
+                        <option value="calculus">Calculus</option>
+                    </select>
+                </div>
+            </div>
+            <div id="problem" class="problem" aria-live="polite">Loading your first problem...</div>
+            <button id="solution-toggle" class="solution-toggle" type="button" aria-expanded="false" aria-controls="solution-panel">Show step-by-step solution</button>
+            <div id="solution-panel" class="solution-panel" hidden>
+                <ol id="solution-steps"></ol>
+                <p id="solution-answer" class="solution-answer"></p>
+            </div>
+            <form id="answer-form" class="answer-row">
+                <input id="answer-input" type="number" step="any" inputmode="decimal" placeholder="Your numeric answer" aria-label="Your numeric answer" required>
+                <button type="submit">Check answer</button>
+            </form>
+            <p id="model-status" class="model-status" aria-live="polite"></p>
+        </section>
+
+        <section class="account" aria-labelledby="account-title">
+            <h2 id="account-title">Save your progress (optional)</h2>
+            <form id="auth-form" class="auth-form">
+                <label for="auth-email">Email
+                    <input id="auth-email" type="email" autocomplete="email" required>
+                </label>
+                <label for="auth-password">Password
+                    <input id="auth-password" type="password" autocomplete="current-password" minlength="8" required>
+                </label>
+                <label class="guardian-consent" for="guardian-confirmation">
+                    <input id="guardian-confirmation" type="checkbox">
+                    <span>I am an adult, or the parent/guardian creating and managing this account for a minor.</span>
+                </label>
+                <div class="auth-actions">
+                    <button id="sign-in-btn" type="submit">Sign in</button>
+                    <button id="sign-up-btn" class="secondary-button" type="button">Create account</button>
+                </div>
+            </form>
+            <div id="account-session" class="account-session" hidden>
+                <span id="account-email"></span>
+                <button id="sign-out-btn" class="secondary-button" type="button">Sign out</button>
+            </div>
+            <p id="auth-status" class="auth-status" aria-live="polite">Checking sign-in setup...</p>
+        </section>
+
+        <section class="billing" aria-label="Premium tutoring">
+            <p>Unlock premium calculus, algebra, and geometry modules.</p>
+            <button id="subscribe-btn" disabled>Unlock Premium Tutoring</button>
+            <a id="manage-subscription" class="manage-subscription" target="_blank" rel="noopener noreferrer" hidden>Manage or cancel subscription</a>
+            <div id="debug-box" aria-live="polite">Checking subscription status...</div>
+        </section>
+
+        <footer class="legal-links" aria-label="Legal information">
+            <a href="/terms/terms.html">Terms</a>
+            <a href="/privacy/privacypolicy.html">Privacy Policy</a>
+        </footer>
+    </div>
+
+    <script type="module" src="/index.js"></script>
+</body>
+</html>
