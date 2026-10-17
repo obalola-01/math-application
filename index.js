@@ -17,6 +17,8 @@ function getAnonymousAppUserId() {
 
 const appUserId = getAnonymousAppUserId();
 const revenueCatApiKey = import.meta.env.VITE_REVENUECAT_API_KEY;
+const ENTITLEMENT_ID = 'create_a_project_called_math_application_tutoring_pro';   // ← ADD THIS
+
 let purchases = revenueCatApiKey ? Purchases.configure({
     apiKey: revenueCatApiKey,
     appUserId
@@ -308,7 +310,7 @@ function checkPremiumStatus(customerInfo) {
   }
 
   // Replace 'premium_tutoring' with whatever Entitlement ID you choose in your dashboard
-  if (customerInfo.entitlements.active['premium_tutoring']) {
+   if (customerInfo.entitlements.active[ENTITLEMENT_ID]) {
     debugBox.innerHTML = "🎉 Welcome Premium Student! You now have full access to Algebra & Calculus.";
     debugBox.style.color = "blue";
     if (subscribeBtn) subscribeBtn.style.display = 'none'; // Hide buy button since they already own it
